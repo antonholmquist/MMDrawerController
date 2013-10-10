@@ -330,8 +330,17 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
         [self setAnimatingDrawer:animated];
         UIViewController * sideDrawerViewController = [self sideDrawerViewControllerForSide:drawerSide];
         CGRect visibleRect = CGRectIntersection(self.childControllerContainerView.bounds,sideDrawerViewController.view.frame);
+        
+        // This fixes a very strange issue with origin.x being set to 0.5
+        if (self.centerContainerView.frame.origin.x == 0.5) {
+            self.centerContainerView.left = 0;
+        }
+        
         BOOL drawerFullyCovered = (CGRectContainsRect(self.centerContainerView.frame, visibleRect) ||
                                    CGRectIsNull(visibleRect));
+        
+        
+        
         if(drawerFullyCovered){
             [self prepareToPresentDrawer:drawerSide animated:animated];
         }
