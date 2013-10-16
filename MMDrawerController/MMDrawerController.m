@@ -932,7 +932,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
             newFrame = CGRectIntegral(newFrame);
             
             // Disable drawer gesture if gesture has moved more in vertical than horizontal direction
-            if (fabs(translatedPoint.x) < fabs(translatedPoint.y)) {
+            if (fabs(translatedPoint.x) < fabs(translatedPoint.y) * 2) {
                 newFrame.origin.x = self.startingPanRect.origin.x;
             }
             
@@ -1126,7 +1126,7 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
 #pragma mark - Helpers
 -(void)setupGestureRecognizers{
     UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureCallback:)];
-    pan.cancelsTouchesInView = NO;
+    pan.cancelsTouchesInView = YES;
     [pan setDelegate:self];
     [self.view addGestureRecognizer:pan];
     
