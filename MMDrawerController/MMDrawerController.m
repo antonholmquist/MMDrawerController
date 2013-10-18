@@ -1206,7 +1206,7 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
     if(self.openSide == MMDrawerSideNone){
         MMOpenDrawerGestureMode possibleOpenGestureModes = [self possibleOpenGestureModesForGestureRecognizer:gestureRecognizer
                                                                                                     withTouch:touch];
-        return ((self.openDrawerGestureModeMask & possibleOpenGestureModes)>0);
+        return ((self.openDrawerGestureModeMask & possibleOpenGestureModes)>0) || gestureRecognizer.view != self.view;
     }
     else{
         MMCloseDrawerGestureMode possibleCloseGestureModes = [self possibleCloseGestureModesForGestureRecognizer:gestureRecognizer
