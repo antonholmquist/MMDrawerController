@@ -933,7 +933,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
             
             // Disable drawer gesture if gesture has moved more in vertical than horizontal direction
             if (fabs(translatedPoint.x) < fabs(translatedPoint.y) * 2) {
-                newFrame.origin.x = self.startingPanRect.origin.x;
+                //newFrame.origin.x = self.startingPanRect.origin.x;
             }
             
             CGFloat xOffset = newFrame.origin.x;
@@ -1202,8 +1202,13 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
 #pragma mark - UIGestureRecognizerDelegate
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
     
+    //NSLog(@"shouldReceiveTouch: %@", touch);
+    //NSLog(@"reco: %@", touch.gestureRecognizers);
+    
     BOOL shouldReceiveTouch = NO;
     if(self.openSide == MMDrawerSideNone){
+        
+        
         MMOpenDrawerGestureMode possibleOpenGestureModes = [self possibleOpenGestureModesForGestureRecognizer:gestureRecognizer
                                                                                                     withTouch:touch];
         return ((self.openDrawerGestureModeMask & possibleOpenGestureModes)>0) || gestureRecognizer.view != self.view;
@@ -1216,8 +1221,14 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
     return shouldReceiveTouch;
 }
 
+- (BOOL)canBePreventedByGestureRecognizer:(UIGestureRecognizer *)preventingGestureRecognizer {
+    //NSLog(@"canBePreventedByGestureRecognizer: %@", preventingGestureRecognizer);
+    
+    return NO;
+}
+
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
+    return NO;
 }
 
 #pragma mark Gesture Recogizner Delegate Helpers
